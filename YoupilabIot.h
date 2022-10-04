@@ -1,6 +1,7 @@
 /*
   YoupilabIot.h - Library for youpilab .
-  Created by Josue A. and Stephane A., Octobre 2, 2022.
+  Created by Josue A. and Stephane A., Octobre, 2022.
+  Youpilab Iot
 */
 #ifndef YoupilabIot_h
 #define YoupilabIot_h
@@ -12,7 +13,7 @@ struct YoupilabIot
 {
 
   public:
-    YoupilabIot(string APP_KEY, string APP_ID, string BASE_URL);
+    YoupilabIot(string APP_KEY, string APP_ID);
  
     void VeriyToConnectWifi(char* s, char* p);
     void sendData (string url, string key, string app_id, float px, int param_number);

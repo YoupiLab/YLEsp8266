@@ -1,7 +1,6 @@
 /*
-  Morse.cpp - Library for flashing Morse code.
-  Created by David A. Mellis, November 2, 2007.
-  Released into the public domain.
+  YoupilabIot.cpp - Library for flashing Morse code.
+  Created by YoupilabIot
 */
 
 #include <Wire.h> 
@@ -15,18 +14,10 @@
 HTTPClient httpClient; //important
 
 using namespace std;
-YoupilabIot::YoupilabIot(string APP_ID, string APP_KEY, string BASE_URL): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("")
+YoupilabIot::YoupilabIot(string APP_ID, string APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api") //constructeur
 {}
 
-void YoupilabIot::VeriyToConnectWifi(char* ssid, char* password){
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("WiFi Failed!");
-    return;
-  }
-}
-
+/********************************************** Les SETTER ET GETTER */
 string YoupilabIot::getAppKey(){
   return _APP_KEY;
 }
@@ -50,3 +41,19 @@ string YoupilabIot::getBaseUrl(){
 void YoupilabIot::setBaseUrl(string url){
       _BASE_URL = url;
 }
+
+//permet de verifier si la carte esp c'est bien connecter
+void YoupilabIot::VeriyToConnectWifi(char* ssid, char* password){
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    Serial.println("WiFi Failed!");
+    return;
+  }
+}
+
+//envoie de donnee sur la plateforme
+
+
+
+//recevoir les donnees
