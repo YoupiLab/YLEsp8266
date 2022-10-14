@@ -7,6 +7,7 @@
 #define YoupilabIot_h
 #include<iostream>
 #include <string>
+
 using namespace std;
 
 struct YoupilabIot
@@ -14,9 +15,11 @@ struct YoupilabIot
 
   public:
     YoupilabIot(string APP_KEY, string APP_ID);
+    YoupilabIot(string APP_KEY, string APP_ID, string BASE_URL);
+
  
     void VeriyToConnectWifi(char* s, char* p);
-    void sendData (string url, string key, string app_id, float px, int param_number);
+    string sendDataFloat(float px , int number);
 
     void DynamicExecution();
 
