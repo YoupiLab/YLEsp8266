@@ -1,38 +1,38 @@
-#include "YoupilabLibraryEsp8266.h"
+#include "YLEsp8266.h"
 WiFiClient wifi;
 
 HTTPClient httpClient;
 
 int status = WL_IDLE_STATUS;
 
-YoupilabLibraryEsp8266::YoupilabLibraryEsp8266(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
-int YoupilabLibraryEsp8266::addPoint(int a, int b){
+YLEsp8266::YLEsp8266(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
+int YLEsp8266::addPoint(int a, int b){
 	return a+ b;
 } 
 
 /********************************************** Les SETTER ET GETTER */
-String YoupilabLibraryEsp8266::getAppKey(){
+String YLEsp8266::getAppKey(){
   return _APP_KEY;
 }
 
-String YoupilabLibraryEsp8266::getAppId(){
+String YLEsp8266::getAppId(){
   return _APP_ID;
 }
 
-void YoupilabLibraryEsp8266::setAppKey(String appkey){
+void YLEsp8266::setAppKey(String appkey){
        _APP_KEY = appkey;
 }
 
-void YoupilabLibraryEsp8266::setAppID(String appid){
+void YLEsp8266::setAppID(String appid){
       _APP_ID = appid;
 }
 
-String YoupilabLibraryEsp8266::getBaseUrl(){
+String YLEsp8266::getBaseUrl(){
      return _BASE_URL;
 }
 
 //permet de verifier si la carte esp c'est bien connecter
-void YoupilabLibraryEsp8266::VeriyToConnectWifi(char* ssid, char* password){
+void YLEsp8266::VeriyToConnectWifi(char* ssid, char* password){
   delay(200); 
   WiFi.begin(ssid, password);
   while(WiFi.status() != WL_CONNECTED){
@@ -49,7 +49,7 @@ void YoupilabLibraryEsp8266::VeriyToConnectWifi(char* ssid, char* password){
 
 
 
-void YoupilabLibraryEsp8266::sendDataFloat(float px, String APP_ID, String APP_KEY){
+void YLEsp8266::sendDataFloat(float px, String APP_ID, String APP_KEY){
    WiFiClientSecure client;
    client.setInsecure();
 
@@ -83,7 +83,7 @@ void YoupilabLibraryEsp8266::sendDataFloat(float px, String APP_ID, String APP_K
       delay(1000);
 }
 
-void YoupilabLibraryEsp8266::dynamicExecution(int led1){
+void YLEsp8266::dynamicExecution(int led1){
     /***********recuperation des instructions a executer depuis la plateforme IoT ******/
     String post_url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + _APP_ID + "&APP_KEY=" + _APP_KEY;
         //String post_url = "https://test.iot.generalinvasion.com/api";
