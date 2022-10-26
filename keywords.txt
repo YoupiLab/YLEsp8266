@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For YoupilabLibraryEsp8266
+# Syntax Coloring Map For YLEsp8266
 #######################################
 
 #######################################
