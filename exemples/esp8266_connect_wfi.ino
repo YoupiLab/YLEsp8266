@@ -14,9 +14,4 @@ void setup(){
 }
 
 void loop(){
-   float po = analogRead(pho_resistance);
-   Serial.println(po);
-   Serial.println(esp.getAppId());
-   esp.sendDataFloat(po, APP_ID, APP_KEY);
-   esp.dynamicExecution(led1); // with this method you can for example turn on or off a led with our iot platform
 }

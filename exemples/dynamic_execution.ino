@@ -19,7 +19,8 @@ void setup(){
 void loop(){
    float po = analogRead(pho_resistance);
    Serial.println(po);
-   Serial.println(esp.getAppId()); //getAppId() is methode to display APPID
-   esp.sendDataFloat(po, APP_ID, APP_KEY);
+   Serial.println(esp.getAppId()); //getAppId() is method to display APPID
+   esp.sendDataFloat(po, APP_ID, APP_KEY); //send float information to our iot platform (https://iot.youpilab.com) 
+   esp.dynamicExecution(led1); //This method will allow for example to turn on or off a lamp.
    
 }
