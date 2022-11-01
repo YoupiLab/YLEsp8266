@@ -10,7 +10,6 @@
 struct YLEsp8266{
     public:
       YLEsp8266(String APP_KEY, String APP_ID);
-      int addPoint(int a, int b);
 
       void VeriyToConnectWifi(char* ssid, char* password);
       
