@@ -115,3 +115,62 @@ void YLEsp8266::dynamicExecution(int led1){
     }
 }
 }
+
+
+void YLEsp8266::sendDataIntegger(int px, String APP_ID, String APP_KEY){
+
+      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
+  
+      post_url+=APP_ID;
+      post_url +="&APP_KEY=";
+      post_url +=APP_KEY;
+      post_url +="&P1=";
+      post_url +=px;                        
+      Serial.println(post_url);
+      /*Envoie de la reqette*/
+     HTTPClient http;
+     http.begin(post_url);
+    
+      int httpResponseCode = http.GET();
+      if (httpResponseCode > 0) {
+        Serial.print("HTTP ");
+        Serial.println(httpResponseCode);
+        String payload = http.getString();
+        Serial.println();
+        Serial.println(payload);
+      }
+      else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+        Serial.println(":-(");
+      }
+}
+
+void YLEsp8266::sendDataBoolean(bool px, String APP_ID, String APP_KEY){
+
+      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
+  
+      post_url+=APP_ID;
+      post_url +="&APP_KEY=";
+      post_url +=APP_KEY;
+      post_url +="&P1=";
+      post_url +=px;                        
+      Serial.println(post_url);
+      /*Envoie de la reqette*/
+     HTTPClient http;
+     http.begin(post_url);
+    
+      int httpResponseCode = http.GET();
+      if (httpResponseCode > 0) {
+        Serial.print("HTTP ");
+        Serial.println(httpResponseCode);
+        String payload = http.getString();
+        Serial.println();
+        Serial.println(payload);
+      }
+      else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+        Serial.println(":-(");
+      }
+}
