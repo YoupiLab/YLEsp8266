@@ -8,7 +8,7 @@
 YoupiLab Iot (https://iot.youpilab.com/) provides hosted services in the cloud that allow you to monitor and control your remote objects.
 ***
 2. General information about the YLEsp8266 library
-Still called mcu node module, this microcontroller has a WiFi interface ideal for connected objects. Male and female side connectors allow the module to be plugged on a quick mounting plate.
+Still called mcu node module, the ESP8266 is a microcontroller has a WiFi interface ideal for connected objects. Male and female side connectors allow the module to be plugged on a quick mounting plate.
 3. Installation in the Arduino IDE
 * To install the ESP8266 board in your Arduino IDE, follow these next instructions:
 

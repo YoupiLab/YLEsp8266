@@ -13,11 +13,11 @@ struct YLEsp8266{
 
       void VeriyToConnectWifi(char* ssid, char* password);
       
-      void sendDataFloat(float px, String APP_ID, String APP_KEY);
+      void sendDataFloat(float px);
 
-      void sendDataIntegger(int px, String APP_ID, String APP_KEY);
+      void sendDataIntegger(int px);
 
-      void sendDataBoolean(bool px, String APP_ID, String APP_KEY);
+      void sendDataBoolean(bool px);
       
       void dynamicExecution(int led);
 
