@@ -57,9 +57,9 @@ void YLEsp8266::sendDataFloat(float px){
    // String post_url = "https://test.iot.generalinvasion.com/api/data/send?APP_ID=" + APP_ID + "&APP_KEY=" + APP_KEY;
          String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
 
-        post_url+=APP_ID;
+        post_url+=_APP_ID; //id of thing
         post_url +="&APP_KEY=";
-        post_url +=APP_KEY;
+        post_url +=_APP_KEY; // key of thing
         post_url +="&P1=";
         post_url +=px;
     //         post_url +="&P2=";
