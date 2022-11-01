@@ -49,7 +49,7 @@ void YLEsp8266::VeriyToConnectWifi(char* ssid, char* password){
 
 
 
-void YLEsp8266::sendDataFloat(float px, String APP_ID, String APP_KEY){
+void YLEsp8266::sendDataFloat(float px){
    WiFiClientSecure client;
    client.setInsecure();
 
