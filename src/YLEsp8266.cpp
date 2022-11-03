@@ -6,9 +6,6 @@ HTTPClient httpClient;
 int status = WL_IDLE_STATUS;
 
 YLEsp8266::YLEsp8266(String APP_ID, String APP_KEY): _APP_ID(APP_ID), _APP_KEY(APP_KEY), _BASE_URL("https://iot.youpilab.com/api"){}
-int YLEsp8266::addPoint(int a, int b){
-	return a+ b;
-} 
 
 /********************************************** Les SETTER ET GETTER */
 String YLEsp8266::getAppKey(){
@@ -32,64 +29,21 @@ String YLEsp8266::getBaseUrl(){
 }
 
 //permet de verifier si la carte esp c'est bien connecter
-void YLEsp8266::VeriyToConnectWifi(char* ssid, char* password){
+int YLEsp8266::veriyAndConnectToWifi(char* ssid, char* password){
   delay(200); 
   WiFi.begin(ssid, password);
   while(WiFi.status() != WL_CONNECTED){
-      Serial.println("tentative de connexion au wifi");
-      Serial.println(ssid);
-    delay(200); 
+    delay(500);
   }
-    Serial.println("Connexion resussi !!");
-    Serial.println("********** Votre adresse ID*************");
-    Serial.print("Votre adresse Ip est : ");
-    Serial.println(WiFi.localIP());
+  
+   return 1;
 }
 
-
-
-
-void YLEsp8266::sendDataFloat(float px){
-   WiFiClientSecure client;
-   client.setInsecure();
-
-   // String post_url = "https://test.iot.generalinvasion.com/api";
-   // String post_url = "https://test.iot.generalinvasion.com/api/data/send?APP_ID=" + APP_ID + "&APP_KEY=" + APP_KEY;
-         String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
-
-        post_url+=_APP_ID; //id of thing
-        post_url +="&APP_KEY=";
-        post_url +=_APP_KEY; // key of thing
-        post_url +="&P1=";
-        post_url +=px;
-    //         post_url +="&P2=";
-    //         post_url +=p2;                         
-      Serial.println(post_url);
-      /*Envoie de la reqette*/
-      httpClient.begin (client,post_url); 
-      int httpResponseCode = httpClient.GET();
-      if (httpResponseCode > 0) {
-        Serial.print("HTTP ");
-        Serial.println(httpResponseCode);
-        String payload = httpClient.getString();
-        Serial.println();
-        Serial.println(payload);
-      }
-      else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
-      }
-      delay(1000);
-}
-
-void YLEsp8266::dynamicExecution(int led1){
+int YLEsp8266::executeAnAction(int led1){
     /***********recuperation des instructions a executer depuis la plateforme IoT ******/
     String post_url = "https://iot.youpilab.com/api/controls/get?APP_ID=" + _APP_ID + "&APP_KEY=" + _APP_KEY;
-        //String post_url = "https://test.iot.generalinvasion.com/api";
 
-     WiFiClientSecure client;
-      client.setInsecure();
+    client.setInsecure();
     httpClient.begin (client,post_url);
     int httpCode=httpClient.GET();
        if (httpCode==HTTP_CODE_OK){
@@ -106,71 +60,264 @@ void YLEsp8266::dynamicExecution(int led1){
     if(etat1==1)
     {
       digitalWrite(led1, HIGH);
-      Serial.println("Equiment démarrer ");
+      return 1;
     }
     else
     {
       digitalWrite(led1, LOW);
-      Serial.println("Equipement Eteint ");
+      return 0;
     }
 }
 }
 
-
-void YLEsp8266::sendDataIntegger(int px){
-
+int YLEsp8266::sendDataFloat(float px){
+      client.setInsecure();
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
-  
-      post_url+=_APP_ID;
+
+      post_url+=_APP_ID; //id of thing
       post_url +="&APP_KEY=";
-      post_url +=_APP_KEY;
+      post_url +=_APP_KEY; // key of thing
       post_url +="&P1=";
-      post_url +=px;                        
-      Serial.println(post_url);
+      post_url +=px;
       /*Envoie de la reqette*/
-     HTTPClient http;
-     http.begin(post_url);
-    
-      int httpResponseCode = http.GET();
+      //  Serial.println(post_url);
+
+      httpClient.begin(client,post_url); 
+      int httpResponseCode = httpClient.GET();
       if (httpResponseCode > 0) {
-        Serial.print("HTTP ");
-        Serial.println(httpResponseCode);
-        String payload = http.getString();
-        Serial.println();
-        Serial.println(payload);
+        
+        String payload = httpClient.getString();
+       
+        return 1;
       }
       else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
+       
+        return 0;
+       
       }
+      delay(1000);
 }
 
-void YLEsp8266::sendDataBoolean(bool px){
 
+int YLEsp8266::sendDataString(String px){
+      client.setInsecure();
       String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
-      //ok good
-      post_url+=_APP_ID;
+      post_url+=_APP_ID; //id of thing
       post_url +="&APP_KEY=";
-      post_url +=_APP_KEY;
+      post_url +=_APP_KEY; // key of thing
       post_url +="&P1=";
-      post_url +=px;                        
-      Serial.println(post_url);
+      post_url +=px;
       /*Envoie de la reqette*/
-     HTTPClient http;
-     http.begin(post_url);
-    
-      int httpResponseCode = http.GET();
+      httpClient.begin (client,post_url); 
+      int httpResponseCode = httpClient.GET();
       if (httpResponseCode > 0) {
-        Serial.print("HTTP ");
-        Serial.println(httpResponseCode);
-        String payload = http.getString();
-        Serial.println();
-        Serial.println(payload);
+        
+        String payload = httpClient.getString();
+        return 1;
       }
       else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(":-(");
+        return 0;
       }
+      delay(1000);
+}
+
+int YLEsp8266::sendDataIntegger(int px){
+      client.setInsecure();
+
+      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
+
+      post_url+=_APP_ID; //id of thing
+      post_url +="&APP_KEY=";
+      post_url +=_APP_KEY; // key of thing
+      post_url +="&P1=";
+      post_url +=px;
+      /*Envoie de la reqette*/
+      httpClient.begin (client,post_url); 
+      int httpResponseCode = httpClient.GET();
+      if (httpResponseCode > 0) {
+        
+        String payload = httpClient.getString();
+        return 1;
+      }
+      else {
+       return 0;
+       
+      }
+      delay(1000);
+}
+
+int YLEsp8266::sendDataBoolean(boolean px){
+      client.setInsecure();
+
+      String post_url = "https://iot.youpilab.com/api/data/send?APP_ID=";
+
+      post_url+=_APP_ID; //id of thing
+      post_url +="&APP_KEY=";
+      post_url +=_APP_KEY; // key of thing
+      post_url +="&P1=";
+      post_url +=px;
+      /*Envoie de la reqette*/
+      httpClient.begin (client,post_url); 
+      int httpResponseCode = httpClient.GET();
+      if (httpResponseCode > 0) {
+        
+        String payload = httpClient.getString();
+        return 1;
+      }
+      else {
+        return 0;
+       
+      }
+      delay(1000);
+}
+
+void YLEsp8266::retrieveInformation(String TERMINAL_ID){
+  client.setInsecure();
+
+  String post_url = "https://iot.youpilab.com/api/terminal/?TERM=";
+  //ok good
+  post_url+=TERMINAL_ID;
+  httpClient.begin (client,post_url); 
+  int httpResponseCode = httpClient.GET();
+  if (httpResponseCode > 0) {
+    
+    String payload = httpClient.getString();
+    Serial.println(payload);
+  }
+  else {
+      Serial.println(httpResponseCode);
+
+  }
+  delay(1000);
+}
+
+void YLEsp8266::countData(){
+    client.setInsecure();
+
+    String post_url = "https://iot.youpilab.com/api/data/count?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+
+    httpClient.begin (client,post_url); 
+    int httpResponseCode = httpClient.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = httpClient.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+    delay(1000);
+}
+
+void YLEsp8266::retrieveAllData(String start, String end){
+    client.setInsecure();
+
+    String post_url = "https://iot.youpilab.com/api/data/pull?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+    post_url +="&start=";
+    post_url +=start;
+    post_url +="&end=";
+    post_url +=end;
+
+      httpClient.begin (client,post_url); 
+      int httpResponseCode = httpClient.GET();
+      if (httpResponseCode > 0) {
+        
+        String payload = httpClient.getString();
+        // Serial.println();
+       Serial.println(payload);
+      }
+      else {
+       
+        Serial.println(httpResponseCode);
+       
+      }
+      delay(1000);
+}
+void YLEsp8266::getInformationForTerminal(){
+    client.setInsecure();
+
+    String post_url = "https://iot.youpilab.com/api/data/count?APP_ID=";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+      
+    httpClient.begin (client,post_url); 
+    int httpResponseCode = httpClient.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = httpClient.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+}
+
+void YLEsp8266::executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION){
+    client.setInsecure();
+
+    String post_url = "https://iot.youpilab.com/api/terminal/response/?TERM=";
+    //ok good
+    post_url+=TERMINAL;
+    post_url +="&TASK_ID=";
+    post_url +=TASK_ID;
+    post_url +="&RESP=";
+    post_url +=RESPONSE_OF_EXECUTION;
+    
+    httpClient.begin (client,post_url); 
+    int httpResponseCode = httpClient.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = httpClient.getString();
+      // Serial.println();
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
+}
+
+void YLEsp8266::sendFeedback(){
+    client.setInsecure();
+
+    String post_url = "https://iot.youpilab.com/api/controls/executed?APP_ID";
+    //ok good
+    post_url+=_APP_ID;
+    post_url +="&APP_KEY=";
+    post_url +=_APP_KEY;
+
+    httpClient.begin (client,post_url); 
+    int httpResponseCode = httpClient.GET();
+    if (httpResponseCode > 0) {
+      // Serial.print("HTTP ");
+      // Serial.println(httpResponseCode);
+      String payload = httpClient.getString();
+
+      Serial.println(payload);
+    }
+    else {
+      
+      Serial.println(httpResponseCode);
+      
+    }
 }

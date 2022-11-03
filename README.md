@@ -37,3 +37,28 @@ YLEsp8266 esp(APP_ID,APP_KEY); allows you to create an object instance called es
 esp.VeriyToConnectWifi(ssid,password); this method connects you to a wifi and makes sure that the esp8266 has been connected to the wifi.
 esp.sendDataFloat(data, APP_ID, APP_KEY); sends float data to our platform in real time. 
 esp.dynamicExecution(led1); This method will allow for example to turn on or off a lamp.
+
+# functions
+ int veriyAndConnectToWifi(char* ssid, char* password);
+      
+    1-  int sendDataFloat(float px);
+
+    2-  int sendDataIntegger(int px);
+
+    3-  int sendDataString(String px);
+
+    4-  int sendDataBoolean(boolean px);
+
+    5- int executeAnAction(int led);
+
+    6-  void retrieveInformation(String TERMINAL_ID);
+
+    7-  void countData();
+
+    8-  void retrieveAllData(String start, String end);
+
+    9-  void getInformationForTerminal();
+
+    10-  void sendFeedback();
+
+      void executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION);

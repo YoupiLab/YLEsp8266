@@ -11,15 +11,29 @@ struct YLEsp8266{
     public:
       YLEsp8266(String APP_KEY, String APP_ID);
 
-      void VeriyToConnectWifi(char* ssid, char* password);
+      int veriyAndConnectToWifi(char* ssid, char* password); //allows to connect to a wifi
       
-      void sendDataFloat(float px);
+      int sendDataFloat(float px); //send a float data on our iot platform (https://iot.youpilab.com); return 1 in case of success and 0 in case of failure
 
-      void sendDataIntegger(int px);
+      int sendDataIntegger(int px); //send a int data on our iot platform (https://iot.youpilab.com); return 1 in case of success and 0 in case of failure
 
-      void sendDataBoolean(bool px);
-      
-      void dynamicExecution(int led);
+      int sendDataString(String px); //send a string data on our iot platform (https://iot.youpilab.com); return 1 in case of success and 0 in case of failure
+
+      int sendDataBoolean(boolean px); // send a boolean data on our iot platform (https://iot.youpilab.com);return 1 in case of success and 0 in case of failure
+
+      int executeAnAction(int led); //execute an action return 1 in case of success and 0 in case of failure
+
+      void retrieveInformation(String TERMINAL_ID); // get info
+
+      void countData();
+
+      void retrieveAllData(String start, String end);
+
+      void getInformationForTerminal();
+
+      void sendFeedback();
+
+      void executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION);
 
       String getAppKey();
       String getBaseUrl();
@@ -30,6 +44,7 @@ struct YLEsp8266{
       void setAppID(String id);
    
    private:
+      WiFiClientSecure client;
       String _APP_ID;
       String _APP_KEY;
       String _BASE_URL;
