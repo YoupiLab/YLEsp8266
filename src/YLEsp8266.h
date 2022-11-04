@@ -23,17 +23,15 @@ struct YLEsp8266{
 
       int executeAnAction(int led); //execute an action return 1 in case of success and 0 in case of failure
 
-      void retrieveInformation(String TERMINAL_ID); // get info
+      int executeTerminalTask(String TERMINAL_ID); // get info
+
+      void getInformationOfThingCreated(); // You can have the information about your thing
 
       void countData();
-
-      void retrieveAllData(String start, String end);
-
-      void getInformationForTerminal();
+      
+      int executeAnActionWithTerminal(String TERMINAL_ID, String TASK_ID, String RESPONSE_OF_EXECUTION);
 
       void sendFeedback();
-
-      void executeTerminalTask(String TERMINAL, String TASK_ID, String RESPONSE_OF_EXECUTION);
 
       String getAppKey();
       String getBaseUrl();
